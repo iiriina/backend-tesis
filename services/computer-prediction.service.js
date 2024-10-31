@@ -4,8 +4,8 @@ const Computadora = require('../models/Computadora.model');
 // Configurar credenciales de AWS manualmente
 const lambda = new AWS.Lambda({
     region: 'us-east-1',  
-    accessKeyId: 'ASIASC3UOTRLRTV7Y6FN',      
-    secretAccessKey: 'BV0WjNFme1wNkB1uHpzT81CwL6sd0cEED/zSWpVb' 
+    accessKeyId: 'ASIASC3UOTRLU7NQGDVZ',      
+    secretAccessKey: 'Ekl/yDXpUIIJfW7HTmdyd0vBtr/N3ixYCuFQ4Cvr' 
 });
 
 // Obtener computadoras con paginación
