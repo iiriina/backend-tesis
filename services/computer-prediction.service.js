@@ -40,6 +40,7 @@ exports.getComputers = async function(query) {
             const preprocessedBody = responseBody.body.replace(/NaN/g, "null");
             responseBody = JSON.parse(preprocessedBody);
         }
+        console.log("responseBody received:", responseBody);
 
         const computadorasData = Array.isArray(responseBody.recommendations) ? responseBody.recommendations : [];
         const computadoras = computadorasData.map(item => new Computadora(item));
