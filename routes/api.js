@@ -12,12 +12,10 @@ var dolar = require('./api/dolar.route');
 var impuestosPuertaAPuerta = require('./api/impuestosPuertaAPuerta.route');
 var envios = require('./api/envios.route'); // Agregar la ruta para envíos
 var tributosCelulares = require('./api/tributosCelulares.route'); // Agregar la ruta para tributos celulares
-var tributosComputadoras = require('./api/tributosComputadoras.route'); // Agregar la ruta para tributos computadoras
+var tributosComputadoras = require('./api/tributosComputadoras.route'); 
+var computersComtrade = require('./api/computers-comtrade.route'); 
 
 router.use('/users', users);
-
-
-//nuevo tesis
 router.use('/computer-prediction', computer_recommendations);
 router.use('/prediction', prediction);
 router.use('/cellphone_recommendations', cellphone_recommendations);
@@ -26,6 +24,7 @@ router.use('/puertaAPuerta', impuestosPuertaAPuerta);
 router.use('/envios', envios);
 router.use('/tributosCelulares', tributosCelulares); 
 router.use('/tributosComputadoras', tributosComputadoras); 
+router.use('/computers-comtrade', computersComtrade); 
 
 
 module.exports = router;
