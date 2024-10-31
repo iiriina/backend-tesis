@@ -14,6 +14,7 @@ var envios = require('./api/envios.route'); // Agregar la ruta para envíos
 var tributosCelulares = require('./api/tributosCelulares.route'); // Agregar la ruta para tributos celulares
 var tributosComputadoras = require('./api/tributosComputadoras.route'); 
 var computersComtrade = require('./api/computers-comtrade.route'); 
+var cellphonesComtrade = require('./api/cellphones-comtrade.route'); // Nueva ruta para cellphones-comtrade
 
 router.use('/users', users);
 router.use('/computer-prediction', computer_recommendations);
@@ -25,6 +26,7 @@ router.use('/envios', envios);
 router.use('/tributosCelulares', tributosCelulares); 
 router.use('/tributosComputadoras', tributosComputadoras); 
 router.use('/computers-comtrade', computersComtrade); 
+router.use('/cellphones-comtrade', cellphonesComtrade); // Nueva ruta para cellphones-comtrade
 
 
 module.exports = router;
