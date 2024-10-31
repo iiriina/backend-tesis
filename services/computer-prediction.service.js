@@ -9,7 +9,7 @@ const lambda = new AWS.Lambda({
     secretAccessKey:  process.env.AWS_SECRET_ACCESS_KEY,  
     sessionToken: process.env.AWS_SESSION_TOKEN  
 });
-
+ 
 // Obtener computadoras con paginación
 exports.getComputers = async function(query) {
     try {

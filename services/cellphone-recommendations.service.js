@@ -1,5 +1,14 @@
-const axios = require('axios');
-const Cellphone = require('../models/Celular.model');  // Assuming you have a Cellphone model similar to the Computadora model
+const AWS = require('aws-sdk');
+const Cellphone = require('../models/Celular.model');
+require('dotenv').config();
+
+// Configurar credenciales de AWS manualmente
+const lambda = new AWS.Lambda({
+    region: 'us-east-1',  
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,      
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,  
+    sessionToken: process.env.AWS_SESSION_TOKEN  
+});
 
 // Obtener celulares con paginación
 exports.getCellphones = async function(query) {
@@ -19,38 +28,23 @@ exports.getCellphones = async function(query) {
             page: page     // Añadir la página
         };
         
-        console.log(transformedQuery);
-        
-        // Filtrar los parámetros que tienen valores vacíos o nulos
-        const filteredQuery = Object.fromEntries(
-            Object.entries(transformedQuery).filter(([key, value]) => value !== null)
-        );
+        console.log("transformedQuery:", transformedQuery);
 
-        console.log("Filtered Query:", filteredQuery);
+        const params = {
+            FunctionName: 'Lambda-cellphones', // Reemplaza con el nombre de tu Lambda de celulares
+            Payload: JSON.stringify({ queryStringParameters: transformedQuery })
+        };
 
-        // URL de la API Gateway para celulares
-        const url = 'https://7xa8zhphp9.execute-api.us-east-1.amazonaws.com/dev/cellphone-recommendations';
-        const queryString = new URLSearchParams(filteredQuery).toString();
-        const requestUrl = `${url}?${queryString}`;
-        console.log("Request URL:", requestUrl);
+        const response = await lambda.invoke(params).promise();
 
-        // Realizar la solicitud GET a la API Gateway con la URL generada
-        const response = await axios.get(requestUrl);
-
-        // Verificar la estructura de la respuesta
-        let responseBody = response.data;
+        let responseBody = JSON.parse(response.Payload);
 
         // Si el cuerpo de la respuesta contiene un 'body' que es una cadena JSON, deserialízalo
         if (responseBody && responseBody.body) {
-            try {
-                // Preprocesa el JSON para reemplazar "NaN" con null
-                const preprocessedBody = responseBody.body.replace(/NaN/g, "null");
-                responseBody = JSON.parse(preprocessedBody);
-            } catch (e) {
-                console.error("Failed to parse JSON response body", e.message);
-                throw new Error("Failed to parse JSON response body");
-            }
+            const preprocessedBody = responseBody.body.replace(/NaN/g, "null");
+            responseBody = JSON.parse(preprocessedBody);
         }
+        console.log("responseBody received:", responseBody);
 
         // Verificar si "recommendations" está definido y es un array
         const cellphonesData = Array.isArray(responseBody.recommendations) ? responseBody.recommendations : [];
@@ -65,7 +59,6 @@ exports.getCellphones = async function(query) {
             totalItems: cellphones.length
         };
     } catch (e) {
-        // Manejo de errores
         console.error("Error in getCellphones", e.message);
         throw new Error('Error while retrieving cellphones');
     }
@@ -85,9 +78,7 @@ exports.getCellphoneById = async function (id_celular) {
         // Devuelve el celular encontrado
         return celular;
     } catch (e) {
-        // Lanza un error en caso de que algo falle
         console.error("Error al recuperar el celular", e.message);
         throw Error('Error al recuperar el celular por ID');
     }
 };
-
