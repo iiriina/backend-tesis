@@ -75,48 +75,6 @@ exports.deleteUser = async function (id) {
 }
 
 
-/*
-exports.crearUsuario = async function (user) {
-
-    // Validar si el correo electrónico ya está en uso
-    const existingUser = await User.findOne({ email: user.email });
-    if (existingUser) {
-        throw new Error('Correo electrónico ya está en uso');
-    }    
-    
-    // Creating a new Mongoose Object by using the new keyword
-    var hashedPassword = bcrypt.hashSync(user.contrasenia, 8);
-    
-    var newUser = new User({
-        nombre: user.nombre,
-        email: user.email,
-        contrasenia: hashedPassword,
-        telefono: user.telefono,
-        titulo: user.titulo,
-        experiencia: user.experiencia,
-        servicios: [],
-        comentariosPendientes: [],
-        contrataciones: []    
-    })
-
-    try {
-        // Saving the User 
-        var savedUser = await newUser.save();
-        var token = jwt.sign({
-            id: savedUser._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
-    } catch (e) {
-        // return a Error message describing the reason 
-        console.log(e)    
-        throw Error("Error while Creating User")
-    }
-}
-*/
-
-
 exports.crearUsuario = async function (user) {
 
     // Validar si el correo electrónico ya está en uso

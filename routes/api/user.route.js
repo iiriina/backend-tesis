@@ -7,7 +7,6 @@ var Authorization = require('../../auth/authorization');
 const validationMiddleware = require('../../middleware/validationUser');
 
 
-// Authorize each API with middleware and map to the Controller Functions
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('Llegaste a la ruta de  api/user.routes');
@@ -15,10 +14,6 @@ router.get('/', function(req, res, next) {
 router.post('/registration', validationMiddleware.validateCreateUser, UserController.crearUsuario) //validado
 router.post('/login/',validationMiddleware.validateLoginUser, UserController.loginUsuario) //validado
 router.post('/userByMail', UserController.getUsersByMail)
-
-/* router.get('/users',Authorization, UserController.getUsers)
-router.put('/update', Authorization, UserController.updateUser)
-router.delete('/delete', Authorization, UserController.removeUser) */
 
 router.post('/solicitarCambioContrasenia',validationMiddleware.validateEmail, UserController.solicitarCambioContrasenia) //solicita cambio contrasenia
 

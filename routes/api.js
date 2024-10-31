@@ -3,9 +3,6 @@ var express = require('express')
 
 var router = express.Router()
 var users = require('./api/user.route')
-var servicios = require('./api/servicio.route')
-var comentarios = require('./api/comentario.route')
-var contrataciones = require('./api/contratacion.route')
 
 var computer_recommendations = require('./api/computer-prediction.route')
 var prediction = require('./api/prediction.route')
@@ -18,9 +15,6 @@ var tributosCelulares = require('./api/tributosCelulares.route'); // Agregar la 
 var tributosComputadoras = require('./api/tributosComputadoras.route'); // Agregar la ruta para tributos computadoras
 
 router.use('/users', users);
-router.use('/servicios', servicios);
-router.use('/comentarios', comentarios);
-router.use('/contrataciones', contrataciones);
 
 
 //nuevo tesis
