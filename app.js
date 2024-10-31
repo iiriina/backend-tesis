@@ -20,7 +20,7 @@ app.use(express.urlencoded({
 // aplico cors
 app.use(cookieParser());
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'https://main.d12b6ub82hfsfv.amplifyapp.com'];
 
 app.use(cors({
   origin: function (origin, callback) {
