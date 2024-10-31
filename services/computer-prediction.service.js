@@ -1,11 +1,13 @@
 const AWS = require('aws-sdk');
 const Computadora = require('../models/Computadora.model');
+require('dotenv').config();
 
 // Configurar credenciales de AWS manualmente
 const lambda = new AWS.Lambda({
     region: 'us-east-1',  
-    accessKeyId: 'ASIASC3UOTRLU7NQGDVZ',      
-    secretAccessKey: 'Ekl/yDXpUIIJfW7HTmdyd0vBtr/N3ixYCuFQ4Cvr' 
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,      
+    secretAccessKey:  process.env.AWS_SECRET_ACCESS_KEY,  
+    sessionToken: process.env.AWS_SESSION_TOKEN  
 });
 
 // Obtener computadoras con paginación
