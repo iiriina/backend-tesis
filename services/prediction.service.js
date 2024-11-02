@@ -1,26 +1,35 @@
-const axios = require('axios');
+const AWS = require('aws-sdk');
+require('dotenv').config();
+
+// Configurar credenciales de AWS manualmente
+const lambda = new AWS.Lambda({
+    region: 'us-east-1',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    sessionToken: process.env.AWS_SESSION_TOKEN
+});
 
 exports.getPrediction = async function() {
     try {
         console.log("Fetching all historical and future prediction data");
 
-        // URL de la API Gateway (reemplaza con tu propia URL)
-        const url = 'https://4tljb4fp5f.execute-api.us-east-1.amazonaws.com/dev/api/prediction/prediction';
+        // Configurar los parámetros para invocar la Lambda
+        const params = {
+            FunctionName: 'lambda-predictivo',  // Nombre de la Lambda que quieres invocar
+            Payload: JSON.stringify({})  // Puedes pasar parámetros en el payload si tu Lambda los espera
+        };
 
-        // Realizar la solicitud GET a la API Gateway sin parámetros de consulta
-        const response = await axios.get(url);
+        // Invocar la función Lambda
+        const response = await lambda.invoke(params).promise();
 
-        // Verificar la estructura de la respuesta
-        let responseBody = response.data;
-        console.log('response', response);
-        console.log('response.data', response.data);
+        // Procesar la respuesta de la Lambda
+        let responseBody = JSON.parse(response.Payload);
+        console.log('responseBody received:', responseBody);
 
         // Si el cuerpo de la respuesta contiene un 'body' que es una cadena JSON, deserialízalo
         if (responseBody && responseBody.body) {
             try {
-                // Preprocesa el JSON para reemplazar "NaN" con null si es necesario
                 const preprocessedBody = responseBody.body.replace(/NaN/g, "null");
-
                 responseBody = JSON.parse(preprocessedBody);
             } catch (e) {
                 console.error("Failed to parse JSON response body", e.message);
@@ -35,16 +44,10 @@ exports.getPrediction = async function() {
         const futureDates = responseBody.future_dates || [];
 
         // Aquí puedes procesar los datos históricos y de predicciones futuros
-        // Para el ejemplo, simplemente lo registraremos en la consola
-
         console.log("Historical Values:", historicalValues);
         console.log("Historical Dates:", historicalDates);
         console.log("Future Predictions:", futurePredictions);
         console.log("Future Dates:", futureDates);
-
-        // Convertir los datos a instancias del modelo Computadora si aplica
-        // const computadoras = computadorasData.map(item => new Computadora(item));
-        // return computadoras;
 
         return {
             historicalValues,
@@ -53,8 +56,7 @@ exports.getPrediction = async function() {
             futureDates,
         };
     } catch (e) {
-        // Manejo de errores
-        console.error("Error in getAllPredictions", e.message);
+        console.error("Error in getPrediction", e.message);
         throw new Error('Error while retrieving prediction data');
     }
 };
