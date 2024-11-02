@@ -5,7 +5,7 @@ exports.getPrediction = async function() {
         console.log("Fetching all historical and future prediction data");
 
         // URL de la API Gateway (reemplaza con tu propia URL)
-        const url = 'https://7xa8zhphp9.execute-api.us-east-1.amazonaws.com/dev/predictions';
+        const url = 'https://4tljb4fp5f.execute-api.us-east-1.amazonaws.com/dev/api/prediction/prediction';
 
         // Realizar la solicitud GET a la API Gateway sin parámetros de consulta
         const response = await axios.get(url);

@@ -70,35 +70,6 @@ exports.removeUser = async function (req, res, next) {
 }
 
 
-/*
-exports.crearUsuario = async function (req, res, next) {
-    // Req.Body contains the form submit values.
-    console.log("llegue al controller",req.body)
-    var User = {
-        nombre: req.body.nombre,
-        email: req.body.email,
-        contrasenia: req.body.contrasenia,
-        telefono: req.body.telefono,
-        titulo: req.body.titulo,
-        experiencia: req.body.experiencia,
-        servicios: [],
-        comentariosPendientes: [],
-        contrataciones: []    
-    }
-    try {
-        // Calling the Service function with the new object from the Request Body
-        var createdUser = await UserService.crearUsuario(User)
-        return res.status(201).json({createdUser, message: "Succesfully Created User"})
-    } catch (error) {
-        if (error.message === 'Correo electrónico ya está en uso') {
-            return res.status(402).json({ status: 402, message: "El correo electrónico ya está en uso" });
-        } else {
-            console.error(error);
-            return res.status(400).json({ status: 400, message: "Error al crear el usuario" });
-        }
-    }
-}
-*/
 exports.crearUsuario = async function (req, res, next) {
     // Req.Body contiene los valores enviados desde el formulario
     console.log("Llegué al controller", req.body);
