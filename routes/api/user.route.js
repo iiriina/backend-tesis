@@ -15,10 +15,6 @@ router.post('/registration', validationMiddleware.validateCreateUser, UserContro
 router.post('/login/',validationMiddleware.validateLoginUser, UserController.loginUsuario) //validado
 router.post('/userByMail', UserController.getUsersByMail)
 
-router.post('/solicitarCambioContrasenia',validationMiddleware.validateEmail, UserController.solicitarCambioContrasenia) //solicita cambio contrasenia
-
-router.put('/cambiarContrasenia', validationMiddleware.validateChangePassword, UserController.cambiarContrasenia) //solicita cambio contrasenia
-
 // Export the Router
 module.exports = router;
 
